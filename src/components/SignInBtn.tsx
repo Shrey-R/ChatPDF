@@ -14,7 +14,7 @@ export async function SignInBtn() {
                 size:'sm',
                 className:'bg-slate-900 hover:bg-slate-700'
             })}>
-            Signin
+            Sign In
         </Button>
         </div>
     </form>
