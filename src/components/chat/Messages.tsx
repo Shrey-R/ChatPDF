@@ -1,18 +1,17 @@
 import { trpc } from "@/app/_trpc/client";
 import Message from "./Message";
 import Skeleton from "react-loading-skeleton";
-import { MessageSquare } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Loader2, MessageSquare } from "lucide-react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { ChatContext } from "./ChatContext";
+import {useIntersection} from '@mantine/hooks'
 
 interface MessageProps {
-  id: string;
-  createdAt: string;
-  text: string;
-  isUserMessage: boolean;
+  fileId: string 
 }
 
-const Messages = ({ fileId }: { fileId: string }) => {
-  const [dbMessages, setDbMessages] = useState<MessageProps[] | undefined>();
+const Messages = ({ fileId }: MessageProps ) => {
+  const {isLoading:isAiThinking} = useContext(ChatContext)
   const { data, isLoading, fetchNextPage } =
     trpc.getFileMessages.useInfiniteQuery(
       {
@@ -24,36 +23,62 @@ const Messages = ({ fileId }: { fileId: string }) => {
       }
     );
 
-  // const messages = data?.pages.flatMap((page) => page.messages);
+  const messages = data?.pages.flatMap((page) => page.messages);
 
-  useEffect(() => {
-    if (data) {
-      const messages = data.pages.flatMap((page) => page.messages);
-      setDbMessages(messages);
+  const loadingMessage = {
+    createdAt: new Date().toISOString(),
+    id:'loading-message',
+    isUserMessage:false,
+    text: (
+      <span className="flex h-full items-center justify-center">
+        <Loader2 className="h-4 w-4 animate-spin" />
+      </span>
+    )
+  }
+
+  const combinedMessges = [
+    ...(isAiThinking? [loadingMessage]:[]),
+    ...(messages ?? []),
+  ]
+
+  const lastMessageRef = useRef<HTMLDivElement>(null);
+
+  const {ref,entry} = useIntersection({
+    root:lastMessageRef.current,
+    threshold:1
+  })
+
+  useEffect(()=>{
+    if(entry?.isIntersecting){
+      fetchNextPage()
     }
-    console.log(dbMessages)
-  }, [data]);
+  },[entry,fetchNextPage])
 
   return (
     <div className="flex max-h-[calc(100vh-3.5rem-7rem)] border-zinc-200 flex-1 flex-col-reverse gap-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
-      {dbMessages && dbMessages.length > 0 ? (
-        dbMessages.map((message, i) => {
+      {combinedMessges && combinedMessges.length > 0 ? (
+        combinedMessges.map((message, i) => {
           const isNextMessageSamePerson =
-          dbMessages[i - 1]?.isUserMessage === dbMessages[i]?.isUserMessage;
-          if (i === dbMessages.length - 1)
+          combinedMessges[i - 1]?.isUserMessage === combinedMessges[i]?.isUserMessage;
+          if (i === combinedMessges.length - 1)
             return (
               <Message
-                key={message.id}
+                ref={ref}
                 message={message}
-                isNextMessageSamePerson={isNextMessageSamePerson}
+                isNextMessageSamePerson={
+                  isNextMessageSamePerson
+                }
+                key={message.id}
               />
             );
           else
             return (
               <Message
-                key={message.id}
                 message={message}
-                isNextMessageSamePerson={isNextMessageSamePerson}
+                isNextMessageSamePerson={
+                  isNextMessageSamePerson
+                }
+                key={message.id}
               />
             );
         })

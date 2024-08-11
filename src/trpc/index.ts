@@ -1,6 +1,5 @@
 import { db } from "@/db";
 import { privateProcedure, publicProcedure, router } from "./trpc";
-// import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { TRPCError } from "@trpc/server";
 import getSession from "@/lib/getSession";
 import { z } from "zod";
@@ -141,7 +140,8 @@ export const appRouter = router({
       messages,
       nextCursor,
     }
-  })
+  }),
+
 });
 
 export type AppRouter = typeof appRouter;
