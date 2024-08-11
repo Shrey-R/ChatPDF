@@ -1,6 +1,6 @@
 # ChatPDF SaaS Application
 
-Check out the live application here:[Link Text](https://chat-pdf-mauve.vercel.app/)
+Check out the live application here:[Chat PDF](https://chat-pdf-mauve.vercel.app/)
 
 ![Home page](public/home-page.png)
 ![App Screenshot](public/chat-preview.png)
@@ -73,19 +73,17 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
 ## Technologies Used
-Next.js
-React
-tRPC
-Next-Auth
-Uploadthing S3 blucket wraper
-Gemini AI
-Superbase PostgreSQL
-Prisma ORM
-Pinecode vector Database
-Tailwind
+- Next.js
+- React
+- tRPC
+- Next-Auth
+- Uploadthing S3 blucket wraper
+- Gemini AI
+- Superbase PostgreSQL
+- Prisma ORM
+- Pinecode vector Database
+- Tailwind
 
 
 
