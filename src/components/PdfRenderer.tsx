@@ -73,7 +73,7 @@ const PdfRenderer = ({ url }: { url: string }) => {
             <ChevronUp className="h-4 w-4" />
           </Button>
         </div>
-        <div className="space-x-2 flex">
+        <div className="space-x-2 sm:flex hidden">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="gap-1.5">

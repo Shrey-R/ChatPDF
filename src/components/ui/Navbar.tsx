@@ -1,10 +1,9 @@
 import Link from "next/link"
 import MaxWidthWrapper from "../MaxWidthWrapper"
 import { buttonVariants } from "./button"
-import { SignInBtn } from "../SignInBtn";
-import { SignOutBtn } from "../SignOutBtn"
 import getSession from "@/lib/getSession";
 import UserAccountNav from "./UserAccNav";
+import { SignInBtn } from "../SignInBtn";
 
 const Navbar = async () => {
     const session = await getSession();
@@ -16,8 +15,8 @@ const Navbar = async () => {
                 <Link href='/' className="flex z-40 font-semibold">
                     <span>ChatPDF</span>
                 </Link>
-                {/* todo: add mobile navbar */}
-                <div className="space-x-5 flex items-center">
+
+                <div className="space-x-0 sm:space-x-5 flex items-center ">
                     {user && <Link href='/dashboard' className={buttonVariants({
                             variant:'ghost',
                             size:'sm'
