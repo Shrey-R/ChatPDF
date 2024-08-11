@@ -14,7 +14,7 @@ export default async function Home () {
           </p>
         </div>
         <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
-          <span>Chat with your </span> <span className="text-blue-600 letter-container">
+          <span>Chat with your </span> <span className="text-blue-600 letter-container block sm:inline">
             {'document'.split('').map((letter, index) => (
               <span key={index} className="letter">{letter}</span>
             ))}

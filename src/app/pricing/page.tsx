@@ -214,18 +214,18 @@ const Page = async () => {
                       {plan === 'Free' ? (
                         <Link
                           href={
-                            user ? '/dashboard' : '/sign-in'
+                            user ? '/dashboard' : '/api/auth/signin?callbackUrl=%2Fdashboard'
                           }
                           >
-                          {user ? <UpgradeButton/> : 'Sign up'}
+                          {user ? <UpgradeButton/> : 'Sign in'}
                         </Link>
                       ) : user ? (
                         <UpgradeButton />
                       ) : (
                         <Link
-                          href='/sign-in'
+                          href='api/auth/signin?callbackUrl=%2Fdashboard'
                           >
-                          {user ? <UpgradeButton/> : 'Sign up'}
+                          {user ? <UpgradeButton/> : 'Sign in'}
                         </Link>
                       )}
                     </div>
